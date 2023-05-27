@@ -18,7 +18,7 @@ class SearchResultWidget extends StatelessWidget {
     final size = MediaQuery.of(context).size;
 
     return SizedBox(
-      height: size.height * 0.7,
+      height: size.height * 0.65,
       width: size.width * 0.9,
       child: ListView.separated(
         physics: const BouncingScrollPhysics(),
@@ -35,60 +35,61 @@ class SearchResultWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
             child: ListTile(
-                title: Text(
-                  data?.the2Name.toString() ?? "",
-                  style: textstyle(
-                    14,
-                    FontWeight.w500,
-                    Colors.grey,
-                  ),
+              title: Text(
+                data?.the2Name.toString() ?? "",
+                style: textstyle(
+                  14,
+                  FontWeight.w500,
+                  Colors.grey,
                 ),
-                trailing: IconButton(
-                  tooltip: watchList.isWatchlist(CompanyData(
-                          companyName: data?.the2Name,
-                          companySympol: data?.the1Symbol))
-                      ? "remove from watchlist"
-                      : "add to watchlist",
-                  splashRadius: 1,
-                  onPressed: () async {
-                    if (!watchList.isWatchlist(
-                      CompanyData(
-                          companyName: data?.the2Name,
-                          companySympol: data?.the1Symbol),
-                    )) {
-                      watchList.addWatchList(
-                        CompanyData(
-                          companyName: data?.the2Name,
-                          companySympol: data?.the1Symbol,
-                          currencyType: data?.the8Currency,
-                          sharePrice:
-                              await provider.getSharePrice(data!.the1Symbol!) ??
-                                  "No share Price",
-                        ),
-                      );
-                      // ignore: use_build_context_synchronously
-                      CommonSnackBAr.snackBar(
-                        context: context,
-                        data: "Company data added to watchlist",
-                        color: specialGreen,
-                      );
-                    } else {
-                      watchList.removeWatchlist(
-                        CompanyData(
-                            companyName: data?.the2Name,
-                            companySympol: data?.the1Symbol),
-                      );
-                    }
-                  },
-                  icon: watchList.isWatchlist(
+              ),
+              trailing: IconButton(
+                tooltip: watchList.isWatchlist(CompanyData(
+                        companyName: data?.the2Name,
+                        companySympol: data?.the1Symbol))
+                    ? "remove from watchlist"
+                    : "add to watchlist",
+                splashRadius: 1,
+                onPressed: () async {
+                  if (!watchList.isWatchlist(
                     CompanyData(
                         companyName: data?.the2Name,
                         companySympol: data?.the1Symbol),
-                  )
-                      ? const Icon(Icons.remove)
-                      : const Icon(Icons.add),
-                  color: kwhite,
-                )),
+                  )) {
+                    watchList.addWatchList(
+                      CompanyData(
+                        companyName: data?.the2Name,
+                        companySympol: data?.the1Symbol,
+                        currencyType: data?.the8Currency,
+                        sharePrice:
+                            await provider.getSharePrice(data!.the1Symbol!) ??
+                                "No share Price",
+                      ),
+                    );
+                    // ignore: use_build_context_synchronously
+                    CommonSnackBAr.snackBar(
+                      context: context,
+                      data: "Company data added to watchlist",
+                      color: specialGreen,
+                    );
+                  } else {
+                    watchList.removeWatchlist(
+                      CompanyData(
+                          companyName: data?.the2Name,
+                          companySympol: data?.the1Symbol),
+                    );
+                  }
+                },
+                icon: watchList.isWatchlist(
+                  CompanyData(
+                      companyName: data?.the2Name,
+                      companySympol: data?.the1Symbol),
+                )
+                    ? const Icon(Icons.remove)
+                    : const Icon(Icons.add),
+                color: kwhite,
+              ),
+            ),
           );
         },
       ),

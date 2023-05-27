@@ -51,7 +51,6 @@ class HomeScreen extends StatelessWidget {
                       : provider.companyList!.isEmpty
                           ? const DataNotFound()
                           : const SearchResultWidget(),
-            
             ],
           ),
         ),

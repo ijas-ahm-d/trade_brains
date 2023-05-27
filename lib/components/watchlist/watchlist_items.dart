@@ -17,8 +17,8 @@ class WatchListItems extends StatelessWidget {
       child: provider.companyModelList.isEmpty
           ? const DataNotFound()
           : Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: ListView.separated(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: ListView.separated(
                 separatorBuilder: (context, index) {
                   return const SpaceWH(height: 15);
                 },
@@ -26,7 +26,7 @@ class WatchListItems extends StatelessWidget {
                 itemCount: provider.companyModelList.length,
                 itemBuilder: (BuildContext context, int index) {
                   final data = provider.companyModelList[index];
-          
+
                   return Container(
                     margin: const EdgeInsets.symmetric(horizontal: 10),
                     decoration: BoxDecoration(
@@ -41,13 +41,15 @@ class WatchListItems extends StatelessWidget {
                           FontWeight.w500,
                           kwhite,
                         ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
                       subtitle: RichText(
                         text: TextSpan(
                           style: textstyle(
                             15,
                             FontWeight.w600,
-                            kwhite,
+                            Colors.green,
                           ),
                           children: [
                             TextSpan(
@@ -103,7 +105,8 @@ class WatchListItems extends StatelessWidget {
                                       Navigator.pop(context);
                                       CommonSnackBAr.snackBar(
                                         context: context,
-                                        data: "Data removed from your watchlist",
+                                        data:
+                                            "Data removed from your watchlist",
                                         color: snackbarRed,
                                       );
                                     },
@@ -128,7 +131,7 @@ class WatchListItems extends StatelessWidget {
                   );
                 },
               ),
-          ),
+            ),
     );
   }
 }
