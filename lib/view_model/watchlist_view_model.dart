@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart%20';
 import 'package:trade_brains/model/trade_brains_db.dart';
@@ -6,7 +5,6 @@ import 'package:trade_brains/model/trade_brains_db.dart';
 class WatchListViewModel extends ChangeNotifier {
   WatchListViewModel() {
     initialize();
-    log("called");
   }
 
   final watchListBox = Hive.box<CompanyData>('WatchListDataBase');
@@ -53,6 +51,5 @@ class WatchListViewModel extends ChangeNotifier {
     companyModelList.removeWhere(
         (element) => element?.companySympol == companyData.companySympol);
     notifyListeners();
-    log("removed");
   }
 }

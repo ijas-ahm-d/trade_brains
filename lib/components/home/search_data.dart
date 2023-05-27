@@ -9,15 +9,16 @@ class SearchData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-        final size = MediaQuery.of(context).size;
-
+    final size = MediaQuery.of(context).size;
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SpaceWH(
           height: size.width * 0.2,
         ),
         SizedBox(
           width: size.width * 0.5,
+          height: size.width * 0.5,
           child: SvgPicture.asset(
             "assets/search.svg",
             width: size.width * 0.3,

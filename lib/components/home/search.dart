@@ -14,7 +14,6 @@ class SearchWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-
     final provider = context.watch<CompanyViewModel>();
     return Padding(
       padding: EdgeInsets.only(
@@ -27,7 +26,7 @@ class SearchWidget extends StatelessWidget {
         width: size.width * 0.9,
         height: 50,
         child: CupertinoSearchTextField(
-          placeholder: "Search company name",
+          placeholder: "Search",
           style: textstyle(
             15,
             FontWeight.w400,

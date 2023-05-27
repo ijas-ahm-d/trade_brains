@@ -16,9 +16,9 @@ class CommonAppbar extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppBar(
       iconTheme: const IconThemeData(
-        color: kblack,
+        color: kwhite,
       ),
-      backgroundColor: kblack,
+      backgroundColor: blackBG.withOpacity(0.9),
       elevation: 0,
       centerTitle: true,
       title: Text(

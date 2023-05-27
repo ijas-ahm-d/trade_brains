@@ -17,7 +17,7 @@ class HomeScreen extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     final provider = context.watch<CompanyViewModel>();
     return Scaffold(
-      backgroundColor: blackBG,
+      backgroundColor: blackBG.withOpacity(0.9),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(
           size.height * 0.07,
@@ -36,9 +36,9 @@ class HomeScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-           const  SearchWidget(),
+              const SearchWidget(),
               provider.searchValue.text.isEmpty
-                  ?const SearchData()
+                  ? const SearchData()
                   : provider.isLoading
                       ? SizedBox(
                           height: size.height * 0.65,
@@ -50,8 +50,8 @@ class HomeScreen extends StatelessWidget {
                           ),
                         )
                       : provider.companyList!.isEmpty
-                          ?const DataNotFound()
-                          :const SearchResultWidget(),
+                          ? const DataNotFound()
+                          : const SearchResultWidget(),
               SpaceWH(
                 height: size.width * 0.1,
               )

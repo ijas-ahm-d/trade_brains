@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
-import 'package:trade_brains/repo/api_status.dart';
+import 'package:trade_brains/repository/api_status.dart';
 
 class ApiServices {
   static Future getmethod(

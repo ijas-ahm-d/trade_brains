@@ -12,7 +12,7 @@ class SearchResultWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<CompanyViewModel>();
-    final watchProvider = context.watch<WatchListViewModel>();
+    final watchList = context.watch<WatchListViewModel>();
     final size = MediaQuery.of(context).size;
 
     return SizedBox(
@@ -40,31 +40,33 @@ class SearchResultWidget extends StatelessWidget {
                 ),
               ),
               trailing: IconButton(
-                tooltip: watchProvider.isWatchlist(CompanyData(
-                
+                tooltip: watchList.isWatchlist(CompanyData(
                         companyName: data?.the2Name,
                         companySympol: data?.the1Symbol))
                     ? "remove from watchlist"
                     : "add to watchlist",
                 splashRadius: 1,
-                onPressed: () {
-                  if (!watchProvider.isWatchlist(
+                onPressed: () async {
+                  if (!watchList.isWatchlist(
                     CompanyData(
                         companyName: data?.the2Name,
                         companySympol: data?.the1Symbol),
                   )) {
-                    watchProvider.addWatchList(
+                    watchList.addWatchList(
                       CompanyData(
-                          companyName: data?.the2Name,
-                          companySympol: data?.the1Symbol),
+                        companyName: data?.the2Name,
+                        companySympol: data?.the1Symbol,
+                        sharePrice:
+                            await provider.getSharePrice(data!.the1Symbol!) ?? "No share Price",
+                      ),
                     );
                   } else {
-                    watchProvider.removeWatchlist(CompanyData(
+                    watchList.removeWatchlist(CompanyData(
                         companyName: data?.the2Name,
                         companySympol: data?.the1Symbol));
                   }
                 },
-                icon: watchProvider.isWatchlist(CompanyData(
+                icon: watchList.isWatchlist(CompanyData(
                         companyName: data?.the2Name,
                         companySympol: data?.the1Symbol))
                     ? const Icon(Icons.remove)

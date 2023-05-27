@@ -3,8 +3,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:trade_brains/model/company_model.dart';
 import 'package:trade_brains/model/share_price_model.dart';
-import 'package:trade_brains/repo/api_services.dart';
-import 'package:trade_brains/repo/api_status.dart';
+import 'package:trade_brains/repository/api_services.dart';
+import 'package:trade_brains/repository/api_status.dart';
 import 'package:trade_brains/utils/urls.dart';
 
 class CompanyViewModel extends ChangeNotifier {
@@ -45,7 +45,7 @@ class CompanyViewModel extends ChangeNotifier {
     setLoading(false);
   }
 
-  getSharePrice(String value) async {
+  Future<String?> getSharePrice(String value) async {
     setLoading2(true);
     String url =
         "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=$value&apikey=$apiKey";
@@ -55,7 +55,9 @@ class CompanyViewModel extends ChangeNotifier {
     );
     if (response is Success) {
       if (response.response != null) {
-        setSharePriceData(response.response as SharePriceModel);
+        SharePriceModel data = response.response as SharePriceModel;
+        log("${data.globalQuote?.the05Price}");
+        return data.globalQuote?.the05Price;
       }
       log("Nothing to show");
     }
@@ -64,6 +66,7 @@ class CompanyViewModel extends ChangeNotifier {
       log("Api call failed");
     }
     setLoading2(false);
+    return null;
   }
 
   setCompanyData(CompanyModel companyData) async {
@@ -88,7 +91,6 @@ class CompanyViewModel extends ChangeNotifier {
 
   clearList() {
     _companyList?.clear();
-    _sharePriceData;
     searchValue.clear();
     notifyListeners();
   }

@@ -15,24 +15,22 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final provider = context.watch<MainViewModel>();
     return Scaffold(
-      backgroundColor: blackBG,
+      backgroundColor: Colors.transparent,
       body: body[provider.currentBottomIndex],
       bottomNavigationBar: NavigationBar(
-  
         backgroundColor: kblack,
         onDestinationSelected: (value) {
           provider.changeBottom(value);
         },
         selectedIndex: provider.currentBottomIndex,
         destinations: const [
-          
           NavigationDestination(
             icon: Icon(
               Icons.home,
               color: kwhite,
             ),
             label: "Home",
-            
+            tooltip: "HOME",
           ),
           NavigationDestination(
             icon: Icon(
@@ -40,6 +38,7 @@ class MainScreen extends StatelessWidget {
               color: kwhite,
             ),
             label: "Watchlist",
+            tooltip: "WATCHLIST",
           ),
         ],
       ),
