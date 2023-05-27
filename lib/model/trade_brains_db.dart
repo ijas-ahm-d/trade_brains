@@ -12,5 +12,13 @@ class CompanyData extends HiveObject {
   @HiveField(2)
   String? sharePrice;
 
-  CompanyData({this.companyName, this.companySympol, this.sharePrice});
+  @HiveField(3)
+  String? currencyType;
+
+  CompanyData({
+    this.companyName,
+    this.companySympol,
+    this.sharePrice,
+    this.currencyType,
+  });
 }

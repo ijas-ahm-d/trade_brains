@@ -54,7 +54,9 @@ class CompanyViewModel extends ChangeNotifier {
       sharePriceModelFromJson,
     );
     if (response is Success) {
+       setLoading2(false);
       if (response.response != null) {
+       
         SharePriceModel data = response.response as SharePriceModel;
         log("${data.globalQuote?.the05Price}");
         return data.globalQuote?.the05Price;
@@ -62,7 +64,7 @@ class CompanyViewModel extends ChangeNotifier {
       log("Nothing to show");
     }
     if (response is Failures) {
-      await setLoading2(false);
+       setLoading2(false);
       log("Api call failed");
     }
     setLoading2(false);

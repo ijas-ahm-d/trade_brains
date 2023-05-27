@@ -6,7 +6,6 @@ import 'package:trade_brains/components/home/search.dart';
 import 'package:trade_brains/components/home/search_data.dart';
 import 'package:trade_brains/components/home/search_result.dart';
 import 'package:trade_brains/utils/colors.dart';
-import 'package:trade_brains/utils/space.dart';
 import 'package:trade_brains/view_model/company_view_model.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -52,9 +51,7 @@ class HomeScreen extends StatelessWidget {
                       : provider.companyList!.isEmpty
                           ? const DataNotFound()
                           : const SearchResultWidget(),
-              SpaceWH(
-                height: size.width * 0.1,
-              )
+            
             ],
           ),
         ),

@@ -20,19 +20,22 @@ class CompanyDataAdapter extends TypeAdapter<CompanyData> {
       companyName: fields[0] as String?,
       companySympol: fields[1] as String?,
       sharePrice: fields[2] as String?,
+      currencyType: fields[3] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, CompanyData obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.companyName)
       ..writeByte(1)
       ..write(obj.companySympol)
       ..writeByte(2)
-      ..write(obj.sharePrice);
+      ..write(obj.sharePrice)
+      ..writeByte(3)
+      ..write(obj.currencyType);
   }
 
   @override

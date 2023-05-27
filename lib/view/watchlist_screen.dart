@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:trade_brains/components/common/c_app_bar.dart';
 import 'package:trade_brains/components/watchlist/watchlist_items.dart';
 import 'package:trade_brains/utils/colors.dart';
-import 'package:trade_brains/utils/space.dart';
-
 
 class WatchListScreen extends StatelessWidget {
   const WatchListScreen({super.key});
@@ -18,11 +16,7 @@ class WatchListScreen extends StatelessWidget {
         preferredSize: Size.fromHeight(size.height * 0.07),
         child: const CommonAppbar(title: "Watchlist"),
       ),
-      body: const SingleChildScrollView(
-        child: Column(
-          children: [SpaceWH(height: 20), WatchListItems()],
-        ),
-      ),
+      body: const WatchListItems(),
     );
   }
 }

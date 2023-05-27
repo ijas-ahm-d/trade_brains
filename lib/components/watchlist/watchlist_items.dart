@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:trade_brains/components/common/c_snack_bar.dart';
 import 'package:trade_brains/components/home/data_not_found.dart';
 import 'package:trade_brains/utils/colors.dart';
+import 'package:trade_brains/utils/space.dart';
 import 'package:trade_brains/utils/text.dart';
 import 'package:trade_brains/view_model/watchlist_view_model.dart';
 
@@ -12,23 +13,22 @@ class WatchListItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<WatchListViewModel>();
-    final size = MediaQuery.of(context).size;
     return Center(
-      child: Container(
-        margin: const EdgeInsets.only(top: 20),
-        height: size.height * 0.65,
-        width: size.width * 0.9,
-        child: provider.companyModelList.isEmpty
-            ? const DataNotFound()
-            : ListView.builder(
+      child: provider.companyModelList.isEmpty
+          ? const DataNotFound()
+          : Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: ListView.separated(
+                separatorBuilder: (context, index) {
+                  return const SpaceWH(height: 15);
+                },
                 physics: const BouncingScrollPhysics(),
                 itemCount: provider.companyModelList.length,
                 itemBuilder: (BuildContext context, int index) {
                   final data = provider.companyModelList[index];
-
+          
                   return Container(
-                    margin: const EdgeInsets.all(10),
-                    padding: const EdgeInsets.all(5),
+                    margin: const EdgeInsets.symmetric(horizontal: 10),
                     decoration: BoxDecoration(
                       color: khash,
                       borderRadius: BorderRadius.circular(10),
@@ -55,10 +55,18 @@ class WatchListItems extends StatelessWidget {
                               style: textstyle(
                                 12,
                                 FontWeight.w300,
-                                kwhite,
+                                Colors.grey,
                               ),
                             ),
                             TextSpan(text: data?.sharePrice),
+                            TextSpan(
+                              text: " (${data?.currencyType})",
+                              style: textstyle(
+                                12,
+                                FontWeight.w300,
+                                kwhite,
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -95,8 +103,7 @@ class WatchListItems extends StatelessWidget {
                                       Navigator.pop(context);
                                       CommonSnackBAr.snackBar(
                                         context: context,
-                                        data:
-                                            "Data removed from your watchlist",
+                                        data: "Data removed from your watchlist",
                                         color: snackbarRed,
                                       );
                                     },
@@ -121,7 +128,7 @@ class WatchListItems extends StatelessWidget {
                   );
                 },
               ),
-      ),
+          ),
     );
   }
 }

@@ -18,7 +18,7 @@ class MainScreen extends StatelessWidget {
       backgroundColor: Colors.transparent,
       body: body[provider.currentBottomIndex],
       bottomNavigationBar: NavigationBar(
-        backgroundColor: kblack,
+        backgroundColor: blackBG.withOpacity(0.9),
         onDestinationSelected: (value) {
           provider.changeBottom(value);
         },
