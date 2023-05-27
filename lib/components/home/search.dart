@@ -7,11 +7,14 @@ import 'package:trade_brains/utils/text.dart';
 import 'package:trade_brains/view_model/company_view_model.dart';
 
 class SearchWidget extends StatelessWidget {
-  final Size size;
-  const SearchWidget({super.key, required this.size});
+  const SearchWidget({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     final provider = context.watch<CompanyViewModel>();
     return Padding(
       padding: EdgeInsets.only(

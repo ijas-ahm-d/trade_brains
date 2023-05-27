@@ -1,53 +1,58 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart%20';
-import 'package:trade_brains/model/company_model.dart';
+import 'package:trade_brains/model/trade_brains_db.dart';
 
 class WatchListViewModel extends ChangeNotifier {
-  final watchListBox = Hive.box<String>('watchListDB');
+  WatchListViewModel() {
+    initialize();
+    log("called");
+  }
 
-  List<BestMatch> companyModelList = [];
+  final watchListBox = Hive.box<CompanyData>('WatchListDataBase');
 
-  bool _isWatchListAdded = false;
-  bool get isWatchListAdded => _isWatchListAdded;
+  List<CompanyData?> companyModelList = [];
 
-  void setWatchlist(bool value) {
-    _isWatchListAdded = value;
+  void initialize() {
+    companyModelList.clear();
+    companyModelList.addAll(watchListBox.values);
     notifyListeners();
   }
 
-  Future<void> addWatchList(BestMatch symbol) async {
-    await watchListBox.add(symbol.the1Symbol!);
-    companyModelList.add(symbol);
-    setWatchlist(true);
+  Future<void> addWatchList(CompanyData companyData) async {
+    await watchListBox.add(companyData);
+    companyModelList.add(companyData);
+    notifyListeners();
   }
 
-  bool isWatchlist(BestMatch symbol) {
-    if (watchListBox.values.contains(symbol.the1Symbol)) {
-      return true;
-    } else {
-      return false;
+  bool isWatchlist(CompanyData companyData) {
+    bool isWatch = false;
+    for (var value in watchListBox.values) {
+      if (value.companySympol == companyData.companySympol) {
+        isWatch = true;
+      }
     }
+    return isWatch;
   }
 
-  Future<void> removeWatchlist(String? symbol) async {
+  Future<void> removeWatchlist(CompanyData? companyData) async {
     int? deleteKey;
 
-    if (!watchListBox.values.contains(symbol)) {
+    if (!isWatchlist(companyData!)) {
       return;
     }
 
-    Map<dynamic, String> watchlistMap = watchListBox.toMap();
+    Map<dynamic, CompanyData> watchlistMap = watchListBox.toMap();
     watchlistMap.forEach((key, value) {
-      if (symbol == value) {
+      if (companyData.companySympol == value.companySympol) {
         deleteKey = key;
       }
     });
 
     await watchListBox.delete(deleteKey);
-    companyModelList.removeWhere((element) => element.the1Symbol == symbol);
-    setWatchlist(false);
+    companyModelList.removeWhere(
+        (element) => element?.companySympol == companyData.companySympol);
+    notifyListeners();
     log("removed");
   }
 }

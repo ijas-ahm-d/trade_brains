@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trade_brains/components/common/c_app_bar.dart';
+import 'package:trade_brains/components/home/data_not_found.dart';
 import 'package:trade_brains/components/home/search.dart';
+import 'package:trade_brains/components/home/search_data.dart';
 import 'package:trade_brains/components/home/search_result.dart';
 import 'package:trade_brains/utils/colors.dart';
 import 'package:trade_brains/utils/space.dart';
-import 'package:trade_brains/utils/text.dart';
 import 'package:trade_brains/view_model/company_view_model.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -25,22 +26,37 @@ class HomeScreen extends StatelessWidget {
           title: "Trade Brains",
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SearchWidget(
-              size: size,
-            ),
-            provider.companyList == null
-                ? Text(
-                    "please search something",
-                    style: textstyle(15, FontWeight.w500, kwhite),
-                  )
-                : SearchResultWidget(size: size),
-            SpaceWH(
-              height: size.width * 0.1,
-            )
-          ],
+      body: GestureDetector(
+        onTap: () {
+          FocusScopeNode curentFocus = FocusScope.of(context);
+          if (!curentFocus.hasPrimaryFocus) {
+            curentFocus.unfocus();
+          }
+        },
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+           const  SearchWidget(),
+              provider.searchValue.text.isEmpty
+                  ?const SearchData()
+                  : provider.isLoading
+                      ? SizedBox(
+                          height: size.height * 0.65,
+                          width: size.width * 0.9,
+                          child: const Center(
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                            ),
+                          ),
+                        )
+                      : provider.companyList!.isEmpty
+                          ?const DataNotFound()
+                          :const SearchResultWidget(),
+              SpaceWH(
+                height: size.width * 0.1,
+              )
+            ],
+          ),
         ),
       ),
     );
